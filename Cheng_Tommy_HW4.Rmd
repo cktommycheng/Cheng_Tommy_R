@@ -125,7 +125,7 @@ Problem7g) Sorts the numbers in xVec in the order of increasing values in yVec
 ```{r}
 xVec[order(yVec)]
 ```
-Problem7h)
+Problem7h) Pick out the elements in yVec at index positions (1,4,7,10,13,...)
 ```{r}
 yVec[seq(1,250,3)]
 ```
