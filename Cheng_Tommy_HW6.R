@@ -6,7 +6,7 @@
 require(ggplot2)
 require(grid)
 
-#Problem2: Creates a simple	scatter	plot of Weight (“Carat”) and Price using Color (the	
+#Problem2: Creates a simple scatter plot of Weight (“Carat”) and Price using Color (the	
 #“Color” column in the diamonds dataframe) as a facet. 
 
 scatter_plot <- ggplot(diamonds, aes(carat, price)) + labs(title='Diamonds-Weight to Price by Color')+ theme(plot.title = element_text(size = rel(1.6), colour = "blue"))+xlab("weight") + ylab("price")+ geom_point(aes(colour = factor(color)))
@@ -28,8 +28,8 @@ price_residual <- resid(price_carat_lm)   #extract the residuals
 k<-ggplot(diamonds, aes(log(carat), price_residual))+ geom_point(aes(colour = factor(color))) + xlab('Weight') + ylab('Price Residuals') +labs(title='Diamonds-Weight to Price by Color')+ theme(plot.title = element_text(size = rel(1.6), colour = "blue"))+theme(legend.position = 'top')
 print(k)
 
-#Problem5: Use	the	grid package to	create a overlay of	three	plots:
-#a density histogram of the	price	and	the	histogram, a density histogram of	carat and the detrended 
+#Problem5: Use the grid package to create a overlay of three plots:
+#a density histogram of the price and the histogram, a density histogram of	carat and the detrended 
 #plot of price residual against weight. 
 
 main_plot <- k+ guides(col = guide_legend(nrow = 1)) + theme(plot.title = element_text(size = rel(2)))
@@ -43,8 +43,8 @@ print(hist_carat, vp = vp2)
 
 
 
-#Problem6: Using grid package	to create	the	a overlay of three plots: The	rotated
-#histogram on the left, the	price	and	the	histogram	on the bottom, and the detrended histogram on top of
+#Problem6: Using grid package	to create the a overlay of three plots: The rotated histogram
+#on the left, the price and the histogram on the bottom, and the detrended histogram on top of
 #price histogram
 
 vp3 <- viewport(angle = 90, width = 0.6, height = 0.2, x = 0.15, y = 0.55)  #frame for histogram of price
