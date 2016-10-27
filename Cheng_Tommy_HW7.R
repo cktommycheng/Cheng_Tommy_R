@@ -6,9 +6,8 @@ require(grid)
 
 ##########Helper function############
 
-test_data<- diamonds
+test_data<- diamonds[1:300, ]
 
-#
 freq_table <- function(data) {
   lapply(data[, sapply(data,is.factor)], table) #prints out the freqency table 
 }
@@ -63,7 +62,6 @@ find_Rsquare<- function(data){
 # Multiple plot function
 # Reference: http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  library(grid)
   
   # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)
@@ -103,7 +101,8 @@ numeric_plot <- function(data, plot_switch, binVec) {
   num <- sapply(data, is.numeric)
   data <- data[,num]
   for(name in colnames(data)) {
-    if(plot_switch == "on" || plot_switch == "grid"){
+    
+    if(plot_switch == "on"){
       grid.newpage()
       m <- lapply(data[name], mean)
       plot1 <- ggplot(data, aes_string(name)) + geom_histogram(fill="blue") + geom_vline(xintercept = m[[1]], colour="red") 
@@ -113,50 +112,59 @@ numeric_plot <- function(data, plot_switch, binVec) {
       print(plot1, vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
       print(plot2, vp = viewport(layout.pos.row = 1, layout.pos.col = 2))
     }
-  
+    
     if(plot_switch == "grid"){
       count_plots <- list()
       density_plots <- list()
-      for(i in 1:length(binVec)) {
-        k <- ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue", bins = bin[i])+ geom_vline(xintercept = m[[1]], color ="red")+ labs(title= paste(binVec[i], "bins"))
-        count_plots[[i]] <- k
+      if(missing(binVec)){
+        print(ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue")+ labs(title= "default bins"))
+        print(ggplot(data, aes_string(name), color = "blue") + geom_histogram(aes(y= ..density..), fill="blue")+ labs(title= "default bins"))
+      }else{
+        for(i in 1:length(binVec)) {
+          k <- ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue", bins = bin[i])+ labs(title= paste(binVec[i], "bins"))
+          count_plots[[i]] <- k
         }
         multiplot(plotlist = count_plots, cols = 3)
         
-      for(i in 1:length(binVec)) {
-        k <- ggplot(data, aes_string(name), color = "blue") + geom_histogram(aes(y= ..density..), fill="blue", bins = bin[i])+ geom_vline(xintercept = m[[1]], color ="red")+ labs(title= paste(binVec[i], "bins"))
-        density_plots[[i]] <- k
+        for(i in 1:length(binVec)) {
+          k <- ggplot(data, aes_string(name), color = "blue") + geom_histogram(aes(y= ..density..), fill="blue", bins = bin[i])+ labs(title= paste(binVec[i], "bins"))
+          density_plots[[i]] <- k
+        }
+        multiplot(plotlist = density_plots, cols = 3)
+        
       }
-      multiplot(plotlist = density_plots, cols = 3)
     }
-}
+  }
 }
 
 cata_binary_plot <-function(data, plot_switch){
+  cata_binary <- sapply(data, function(x) (is.factor(x) || is.logical(x)))
+  cata_binary_data <- data[cata_binary]
+  
   if(plot_switch == "on" || plot_switch == "grid") {
-    for(name in colnames(test_data2)) {
-      cata_binary <- sapply(test_data, function(x) (is.factor(x) || is.logical(x)))
-      cata_binary_data <- data[cata_binary]
+    for(name in colnames(cata_binary_data)) {
       j <- ggplot(cata_binary_data, aes_string(name), color = "grey") + geom_bar(fill="grey")
       print(j)
     }
- }
+  }
 }
 
 
 #main function
 explore <- function(dataframe, plot_switch, thres, binVec){
-  
   new_dataframe <- freq_table(dataframe)
   allSummary <- printSummary(dataframe)
   Coeff_table <- pearson(dataframe)
   AbsCoeff_table <-abs_pearson(Coeff_table, thres)
   Rsquare_table <- find_Rsquare(dataframe)
-  #numeric_plot(dataframe, plot_switch, binVec)
+  numeric_plot(dataframe, plot_switch, binVec)
   cata_binary_plot(dataframe, plot_switch)
-  new_list <-list(new_dataframe, allSummary, AbsCoeff_table, Rsquare_table)
+  new_list <-list(new_dataframe, allSummary, Rsquare_table, AbsCoeff_table)
   return(new_list)
 }
 
 
-jj <- explore(test_data, "grid", 0.1, c(20, 30 , 40))
+
+#TestCase
+#explore(test_data, "grid", 0.02)
+mm <- explore(test_data, "off", 0.3, c(20, 60, 80, 100))
