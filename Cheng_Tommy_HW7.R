@@ -201,8 +201,11 @@ cata_binary_plot <-function(data, plot_switch){
 ###########################################################################
 explore <- function(dataframe, plot_switch, thres, binVec){
   
-  if(!is.data.frame(dataframe)){                                  #Check to see if input is a dataframe
-    stop("data must be a single data frame.")
+  while(!is.data.frame(dataframe)){                 #check to see if user input a dataframe. If not, prompt the user to choose a new file and convert to df
+    print("Your input is not a dataframe ")
+    print("Choose your a new csv or txt file ")
+    file1 <- file.choose()
+    dataframe <- read.csv(file1, header = T)
   }
   
   button <- plot_switch
@@ -219,12 +222,25 @@ explore <- function(dataframe, plot_switch, thres, binVec){
     threshold <- as.numeric(a)
   }
   
-  if (!is.integer(binVec)) {            #Check to see if bins are all integer, if not, round it 
-    binVec <- round(binVec)
+  while (TRUE %in% (binVec <= 0)) {                        #check to see if bins are positive, if not, prompt user input again
+    a <- readline(prompt="Enter or size of the bin Vector (or enter q to quit): ")
+    if(a == "q"){
+      stop("Quit")
+    }
+    else{
+      binVec <- c()
+      size <- as.numeric(a)
+      for(i in 1:size){
+        bin <- readline(prompt="Enter the number of bins: ")
+        bin <- as.numeric(bin)
+        binVec <- c(binVec, bin)
+      }
+    }
+      
   }
   
-  if (TRUE %in% (binVec <= 0)) {                        #check to see if bins are positive
-    stop("number of bins must be a positive integer.")
+  if (!is.integer(binVec)) {            #Check to see if bins are all integer, if not, round it 
+    binVec <- round(binVec)
   }
   
   
@@ -240,8 +256,9 @@ explore <- function(dataframe, plot_switch, thres, binVec){
 
 }
 
-
-#jj <- explore(test_data, "grid", 0.1, c(20, 30 , 40))
-
+#TestCase
+#explore(test_data, "off", 0.1, c(20, 30 , 40))
+#explore(test_data, "on", 0.1, c(70, 80, 30))
 #explore(test_data, "grid", 0.2, c(38.4, 30.1))
-explore(test_data, "jj", -3, c(-40, -60))
+explore(test_data, "hello", -100000, c(-60, -80, -900))
+#explore(c(30, 40, 50), "grid", 0.3)
