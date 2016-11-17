@@ -1,0 +1,139 @@
+Stuart- Could have used a little more documentation, overall good work throughout.
+
+---
+title: "HW4"
+author: "Tommy Cheng"
+date: "October 8, 2016"
+output: html_document
+---
+
+## Homework4
+Problem1a: (1,2,3,...,19,20)
+```{r}
+a <- (1:20)
+```
+
+Problem1b: (20,19,...,2,1)
+```{r}
+b <- (20:1)
+```
+
+Problem1c: (1,2,3,...,19,20,19,18,...,2,1)	
+```{r}
+c(1:20,19:1)
+```
+
+Problem1d: (4,	6,	3)	and	assign	it	to	the	name	tmp.	
+```{r}
+tmp <- c(4,6,3)
+```
+Problem1e) (4,6,3, 4,6,3,...,4,6,3) where there are 10 occurrences of 4.
+```{r}
+rep(tmp,10)
+```
+Problem1f) (4,6,3,	4,6,3,...,4,6,3,4)	where	there	are	11	occurrences	of	4,	10	
+occurrences	of	6	and	10	occurrences	of 3.	
+```{r}
+c( rep(tmp,10), 4)
+```
+Problem1g) (4,4,...,4,	6,6,...,6,	3,3,...,3)	where	there	are	10	occurrences	of	4,	20	
+occurrences	of	6	and	30	occurrences	of	3.	
+```{r}
+c(rep(4,10), rep(6,20), rep(3,30))
+```
+Problem2) Create a vector of the	values of e^x
+cos(x)	at	x	=	3,3.1,3.2,...,5.9,6.
+```{r}
+m <- seq(3,6,0.1)
+exp(m)*cos(m)
+```
+Problem3a) Create a vector (0.1^3*0.2^1,0.1^6*0.2^4,0.1^9*0.2^7,...,0.1^36*0.2^34)
+```{r}
+x<-seq(3,36,3)
+y<-seq(1,34,3)
+v <- (0.1^x*0.2^y)
+```
+Problem3b) Create a vector (2,2^2/2,...2^25/25)
+```{r}
+(2^c(1:25))/c(1:25)
+```
+Problem4a) Find the sum of formula
+```{r}
+k <- c(10:100) #create vector with values from 10 to 100
+sum(k^3+4*k^2) #sum of formula
+```
+Problem4b) Find the sum of formula
+```{r}
+r <-c(1:25) #create vector with values from 1 to 25
+sum((2^r)/r + 3^r/(r^2))
+```
+Problem5a)Use function paste to create vectors of length 30. ("label 1", "label 2",....., "label 30"). with a single space between label and the number following.
+```{r}
+s1 <- c(1:30)
+paste('label', s1, sep=" ")
+```
+Problem5b) ("fn1", "fn2", ..., "fn30"). In this case, there is no space between fn and the number 
+```{r}
+s2 <- c(1:30)
+paste('fn', s2, sep="")
+```
+Problem6 create xVec and yVec
+```{r}
+set.seed(50)
+xVec <- sample(0:999, 250, replace=T)
+yVec <- sample(0:999, 250, replace=T)
+```
+Problem6a) Create the vector (y2-x1,y3-x2,...yn-xn-1)
+```{r}
+yVec[-1]-xVec[-250]
+```
+Problem6b) Create the vector(sin(y1)/cos(x2),...sin(yn-1))/cos(xn)
+```{r}
+sin(yVec[-250]) / cos(xVec[-1])
+```
+Problem6c) Create the vector (x1+2*x2-x3,...x(n-2)+2*x(n-1)-xn)
+```{r}
+xVec[-c(249,250)] + 2*xVec[-c(1,250)]-xVec[-c(1,2)]
+```
+Problem6d) Finds the sum of the formula
+```{r}
+sum(exp(-xVec[-1])/(xVec[-250]+10))
+```
+Problem7a) Pick	out	the	values in yVec which are greater than 600.
+```{r}
+yVec[yVec>600]
+```
+Problem7b) Pick out values in xVec which correspond to the values in yVec which are > 600 by index
+Stuart- These are the indices of the rows, but you need to find the corresponding xVec values.
+```{r}
+which(yVec>600)
+```
+Problem7c) Finds the values in xVec which correspond to values in yVec which are > 600?
+```{r}
+xVec[yVec>600]
+```
+Problem7d) Creates a vector
+```{r}
+(abs(xVec-mean(xVec)))^(1/2)
+```
+Problem7e) Finds how many values in yVec are within 200 of the max value
+```{r}
+length(which(yVec >= max(yVec)-200))
+```
+Problem7f) Finds how many values in xVec are divisible by 2. 
+```{r}
+length(which(xVec%%2==0))
+```
+Problem7g) Sorts the numbers in xVec in the order of increasing values in yVec
+```{r}
+xVec[order(yVec)]
+```
+Problem7h) Pick out the elements in yVec at index positions (1,4,7,10,13,...)
+```{r}
+yVec[seq(1,250,3)]
+```
+Problem8) By using the function cumprod	to calculate to sum of a formula
+```{r}
+1+sum(cumprod(seq(2,38,2)/seq(3,39,2)))
+```
+
