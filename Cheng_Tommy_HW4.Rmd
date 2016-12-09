@@ -8,52 +8,52 @@ output: html_document
 ## Homework4
 Problem1a: (1,2,3,...,19,20)
 ```{r}
-a <- (1:20)
+a <- (1:20)   # Create a vector (1,2,3,...,19,20)
 ```
 
 Problem1b: (20,19,...,2,1)
 ```{r}
-b <- (20:1)
+b <- (20:1)# Create the vector (20,19,...,2,1) from decending order
 ```
 
-Problem1c: (1,2,3,...,19,20,19,18,...,2,1)	
+Problem1c: (1,2,3,...,19,20,19,18,...,2,1)	  #
 ```{r}
-c(1:20,19:1)
+c(1:20,19:1)  #define c to be the integers from 1 to 20, and 19 to 1, combine those 2
 ```
 
 Problem1d: (4,	6,	3)	and	assign	it	to	the	name	tmp.	
 ```{r}
-tmp <- c(4,6,3)
+tmp <- c(4,6,3)  # Create a vector (4, 6, 3) and assign it to the name tmp
 ```
 Problem1e) (4,6,3, 4,6,3,...,4,6,3) where there are 10 occurrences of 4.
 ```{r}
-rep(tmp,10)
+rep(tmp,10) #Create the vector (4,6,3, 4,6,3,...,4,6,3) where there are 10 occurrences of 4
 ```
 Problem1f) (4,6,3,	4,6,3,...,4,6,3,4)	where	there	are	11	occurrences	of	4,	10	
 occurrences	of	6	and	10	occurrences	of 3.	
 ```{r}
-c( rep(tmp,10), 4)
+c( rep(tmp,10), 4) # Create the vector with the part of repeating tmp 10 times, then repeat that vector 4 times to create new vector
 ```
 Problem1g) (4,4,...,4,	6,6,...,6,	3,3,...,3)	where	there	are	10	occurrences	of	4,	20	
 occurrences	of	6	and	30	occurrences	of	3.	
 ```{r}
-c(rep(4,10), rep(6,20), rep(3,30))
+c(rep(4,10), rep(6,20), rep(3,30)) #using the previously created tmp, we print each number in c the number of times designated (10 for 4, 20 for 6, and 30 for 3)
 ```
 Problem2) Create a vector of the	values of e^x
 cos(x)	at	x	=	3,3.1,3.2,...,5.9,6.
 ```{r}
-m <- seq(3,6,0.1)
-exp(m)*cos(m)
+m <- seq(3,6,0.1) #define our variable m so that it is the sequence of numbers between 3 and 6 with .1 added each time
+exp(m)*cos(m)  #use that variable and plug it into the desired equation, creating the desired vector
 ```
 Problem3a) Create a vector (0.1^3*0.2^1,0.1^6*0.2^4,0.1^9*0.2^7,...,0.1^36*0.2^34)
 ```{r}
-x<-seq(3,36,3)
-y<-seq(1,34,3)
-v <- (0.1^x*0.2^y)
+x<-seq(3,36,3)    #create a sequence from 3 to 36 increment by 3
+y<-seq(1,34,3)    #create a sequence from 1 to 34 increment by 3
+v <- (0.1^x*0.2^y)  #plug in x and y into the equation
 ```
 Problem3b) Create a vector (2,2^2/2,...2^25/25)
 ```{r}
-(2^c(1:25))/c(1:25)
+(2^c(1:25))/c(1:25) #define a variable e such that it takes 2 to the exponents 1-25 over the integers 1-25
 ```
 Problem4a) Find the sum of formula
 ```{r}
@@ -62,36 +62,36 @@ sum(k^3+4*k^2) #sum of formula
 ```
 Problem4b) Find the sum of formula
 ```{r}
-r <-c(1:25) #create vector with values from 1 to 25
-sum((2^r)/r + 3^r/(r^2))
+r <-c(1:25) #first we defie a variable r as integers between 1 and 25
+sum((2^r)/r + 3^r/(r^2)) # take the sum as described using our variable g
 ```
 Problem5a)Use function paste to create vectors of length 30. ("label 1", "label 2",....., "label 30"). with a single space between label and the number following.
 ```{r}
-s1 <- c(1:30)
-paste('label', s1, sep=" ")
+s1 <- c(1:30)  #create a vector s1 with integers from 1 to 30 
+paste('label', s1, sep=" ") #the first part of our paste is the word label, then use a separator to add a space between that and the integers 1-30
 ```
 Problem5b) ("fn1", "fn2", ..., "fn30"). In this case, there is no space between fn and the number 
 ```{r}
-s2 <- c(1:30)
-paste('fn', s2, sep="")
+s2 <- c(1:30)     #create a vector s2 with integers from 1 to 30
+paste('fn', s2, sep="")   #use to paste function, paste fn, and then vector s2 directly following the fn, without a space
 ```
 Problem6 create xVec and yVec
 ```{r}
-set.seed(50)
-xVec <- sample(0:999, 250, replace=T)
-yVec <- sample(0:999, 250, replace=T)
+set.seed(50)   #fix the random numbers generated 
+xVec <- sample(0:999, 250, replace=T)  #generate a vector 250 numbers from 0 to 999 with replacement
+yVec <- sample(0:999, 250, replace=T) #generate a vector 250 numbers from 0 to 999 with replacement
 ```
 Problem6a) Create the vector (y2-x1,y3-x2,...yn-xn-1)
 ```{r}
-yVec[-1]-xVec[-250]
+yVec[-1]-xVec[-250] #get rid of the first entry of vector y so push every number up to 1 index. Get rid of the last entry of vector x. And so the difference of 2 vectors. 
 ```
 Problem6b) Create the vector(sin(y1)/cos(x2),...sin(yn-1))/cos(xn)
 ```{r}
-sin(yVec[-250]) / cos(xVec[-1])
+sin(yVec[-250]) / cos(xVec[-1]) #get rid of the last entry of vector y, Get rid of the first entry of vector x and do the divison. 
 ```
 Problem6c) Create the vector (x1+2*x2-x3,...x(n-2)+2*x(n-1)-xn)
 ```{r}
-xVec[-c(249,250)] + 2*xVec[-c(1,250)]-xVec[-c(1,2)]
+xVec[-c(249,250)] + 2*xVec[-c(1,250)]-xVec[-c(1,2)] #Create the vector(sin(y1)/cos(x2),...sin(yn-1))/cos(xn)
 ```
 Problem6d) Finds the sum of the formula
 ```{r}
@@ -99,38 +99,38 @@ sum(exp(-xVec[-1])/(xVec[-250]+10))
 ```
 Problem7a) Pick	out	the	values in yVec which are greater than 600.
 ```{r}
-yVec[yVec>600]
+yVec[yVec>600]  #extract the position where the numbers in YVec > 600, get a True/False vector for each position, pass it back to yVec to extract the values > 600
 ```
 Problem7b) Pick out values in xVec which correspond to the values in yVec which are > 600 by index
 ```{r}
-which(yVec>600)
+which(yVec>600)#extract the position where the numbers in YVec > 600, get a True/False vector for each position.
 ```
 Problem7c) Finds the values in xVec which correspond to values in yVec which are > 600?
 ```{r}
-xVec[yVec>600]
+xVec[yVec>600] #extract the position where the numbers in YVec > 600, get a True/False vector for each position, pass it back to XVec to the new vector
 ```
 Problem7d) Creates a vector
 ```{r}
-(abs(xVec-mean(xVec)))^(1/2)
+(abs(xVec-mean(xVec)))^(1/2) #the square root of the absolute values of what's described using those built-in functions
 ```
 Problem7e) Finds how many values in yVec are within 200 of the max value
 ```{r}
-length(which(yVec >= max(yVec)-200))
+length(which(yVec >= max(yVec)-200)) #sum values from the TRUE values given in the function such that they are within 200 of the maximum value
 ```
 Problem7f) Finds how many values in xVec are divisible by 2. 
 ```{r}
-length(which(xVec%%2==0))
+length(which(xVec%%2==0)) #find which vector position mod2 equal to zero, extract those vales and find the length. 
 ```
 Problem7g) Sorts the numbers in xVec in the order of increasing values in yVec
 ```{r}
-xVec[order(yVec)]
+xVec[order(yVec)] #order yVec in value, put that in to xVec to extract the same order of position of yVec
 ```
 Problem7h) Pick out the elements in yVec at index positions (1,4,7,10,13,...)
 ```{r}
-yVec[seq(1,250,3)]
+yVec[seq(1,250,3)]  #create a sequence from every 3 number from 1 to 250 as the position vector. Put that in to YVec to extract the values from those
 ```
 Problem8) By using the function cumprod	to calculate to sum of a formula
 ```{r}
-1+sum(cumprod(seq(2,38,2)/seq(3,39,2)))
+1+sum(cumprod(seq(2,38,2)/seq(3,39,2)))   #create a sequence from 2 to 38 increment by 2, create a sequence from 3 to 39 increment by 2, multiply each value of both sequences and sum it. Then add 1. 
 ```
 

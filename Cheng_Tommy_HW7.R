@@ -156,14 +156,16 @@ numeric_plot <- function(data, plot_switch, binVec) {
     }
     
     if(plot_switch == "grid"){          #Case when switch is "grid"
+      m <- lapply(data[name], mean) 
       count_plots <- list()             #Create a empty list to store the count histogram subplots of each bin size
       density_plots <- list()           #Create a empty list to store the density histograms subplots of each bin size
       if(missing(binVec)){              #This takes of the case when the vector is null, prints histogram with default bins 30
-        print(ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue")+ labs(title= "default bins"))
-        print(ggplot(data, aes_string(name), color = "blue") + geom_histogram(aes(y= ..density..), fill="blue")+ labs(title= "default bins"))
+        print(ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue")+ geom_vline(xintercept = m[[1]], colour="red") + labs(title= "default bins"))
+        print(ggplot(data, aes_string(name), color = "blue") + geom_histogram(aes(y= ..density..), fill="blue")+ geom_vline(xintercept = m[[1]], colour="red")+ labs(title= "default bins"))
       }else{                            #This takes care of the case when the user enters a vector
+        m <- lapply(data[name], mean)
         for(i in 1:length(binVec)) {    #loop through each bin size and create a subplot
-        k <- ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue", bins = binVec[i])+ labs(title= paste(binVec[i], "bins"))
+        k <- ggplot(data, aes_string(name), color = "blue") + geom_histogram(fill="blue", bins = binVec[i])+geom_vline(xintercept = m[[1]], colour="red")+labs(title= paste(binVec[i], "bins"))
         count_plots[[i]] <- k           #Push each subplot to a list 
         }
         multiplot(plotlist = count_plots, cols = 2)     
@@ -222,7 +224,7 @@ explore <- function(dataframe, plot_switch, thres, binVec){
     threshold <- as.numeric(a)
   }
   
-  while (TRUE %in% (binVec <= 0)) {                        #check to see if bins are positive, if not, prompt user input again
+  while (!missing(binVec) && TRUE %in% (binVec <= 0)) {                        #check to see if bins are positive, if not, prompt user input again
     a <- readline(prompt="Enter or size of the bin Vector (or enter q to quit): ")
     if(a == "q"){
       stop("Quit")
@@ -239,7 +241,7 @@ explore <- function(dataframe, plot_switch, thres, binVec){
       
   }
   
-  if (!is.integer(binVec)) {            #Check to see if bins are all integer, if not, round it 
+  if (!missing(binVec) && !is.integer(binVec)) {            #Check to see if bins are all integer, if not, round it 
     binVec <- round(binVec)
   }
   
@@ -257,8 +259,8 @@ explore <- function(dataframe, plot_switch, thres, binVec){
 }
 
 #TestCase
-#explore(test_data, "off", 0.1, c(20, 30 , 40))
+explore(test_data, "grid", 0.1)
 #explore(test_data, "on", 0.1, c(70, 80, 30))
 #explore(test_data, "grid", 0.2, c(38.4, 30.1))
-explore(test_data, "hello", -100000, c(-60, -80, -900))
+#explore(test_data, "hello", -100000, c(-60, -80, -900))
 #explore(c(30, 40, 50), "grid", 0.3)
